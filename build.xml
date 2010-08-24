@@ -1,0 +1,21 @@
+<project name="tapas-directory" default="default">
+	
+	<target name="default" depends="clean, setup"/>
+	
+	<target name="clean">
+		<echo message="cleaning directory build"/>
+		<delete dir="./build"/>
+	</target>
+	
+	<target name="setup">
+		<echo message="creating build directory"/>
+		<mkdir dir="./build"/>
+		<copy todir="build">
+			<fileset dir=".">
+				<exclude name="build"/>
+			</fileset>
+		</copy>
+		<exec executable="ndistro" dir="build" failonerror="true"/>
+	</target>
+		
+</project>
