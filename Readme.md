@@ -1,15 +1,35 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
 
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>README.md</title>
-	<meta name="generator" content="TextMate http://macromates.com/">
-	<meta name="author" content="Phil Hawksworth">
-	<!-- Date: 2010-08-24 -->
-</head>
-<body>
+# Tapas Directory
 
-</body>
-</html>
+A Tapas (Team Application Platform And Services) module which provides a user directory API and admin interface.
+
+
+## Dependencies
+
+Dependencies are all managed from [nDistro](http://github.com/visionmedia/ndistro) so that all files are copied and executed in a relative directory, making the application self contained without requiring the need to add modules to the system.  This is desirable as we may have many applications requiring different versions on the same server.
+
+A copy of [nDistro](http://github.com/visionmedia/ndistro) will need to be installed, instructions are on the project page.
+
+
+## Build
+
+This example uses [Apache Ant](http://ant.apache.org/) as a build script.  Currently this build script does the following:
+
+* creates a build directory
+* copies all relevant files into the build directory
+* executes nDistro
+
+This build script should also start the application, run tests against it and then shut the application down. It should generate appropriate reports and be executed in a continuous integration environment.
+
+
+## The API
+
+Tapas is heavily API driven and is intended to provide your applications with a performant API layer and a simple admin area to manage your content.  The Tapas Directory API is structured like so:
+
+	/directory/<API-VERSION>/<NOUN>/<OUTPUT-FORMAT>
+	
+For example:
+
+	/directory/0.1/users/jsonp
+
+
