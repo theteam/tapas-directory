@@ -1,0 +1,123 @@
+html,body,form,div,p,span,header,footer,h1,h2,h3,h4,h5 {
+	margin:0;
+	padding:0;
+}
+html {-webkit-font-smoothing: antialiased;}		
+body {
+	font:16px/1.6em "Helvetica Neue", "Helvetica", arial, sans-serif;
+	color:#333;
+	border-top:4px solid #B3B655;
+	webkit-fontsmoothing: antialias;
+}
+
+header {
+	padding:1em 2em;
+	background-color:#eee;
+	border-top:1px solid #fff;
+	border-bottom:1px solid #ccc;
+	webkit-text-shadow:1px 1px 1px #fff;
+	margin-bottom:2em;	
+}
+
+header h1 {
+	padding:0.3em 0;
+	color:#555;
+}
+header h2 {
+	display:inline;
+	padding:0.3em 0;
+	color:#777;
+}
+
+footer {
+	padding:1em 2em;
+	font-size:0.8em;
+	background-color:#eee;
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	webkit-text-shadow:1px 1px 1px #fff;	
+	margin-top:2em;	
+}
+
+form {
+	background: #9cbc2c;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	border-radius: 4px;
+	counter-reset: fieldsets;
+	padding: 20px;
+	margin:0 auto;
+	width: 400px;
+}
+
+	form legend {
+		color: #384313;
+		font-size: 16px;
+		font-weight: bold;
+		padding-bottom: 10px;
+		text-shadow: 0 1px 1px #c0d576;
+	}
+
+	form > fieldset > legend:before {
+		content: "Step " counter(fieldsets) ": ";
+		counter-increment: fieldsets;
+	}
+
+	form fieldset fieldset legend {
+		color: #111111;
+		font-size: 13px;
+		font-weight: normal;
+		padding-bottom: 0;
+	}
+	
+	
+	form ol li {
+		background: #b9cf6a;
+		background: rgba(255,255,255,.3);
+		border-color: #e3ebc3;
+		border-color: rgba(255,255,255,.6);
+		border-style: solid;
+		border-width: 2px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-khtml-border-radius: 5px;
+		border-radius: 5px;
+		line-height: 30px;
+		list-style: none;
+		padding: 5px 10px;
+		margin-bottom: 2px;
+	}
+					
+		form ol ol li {
+			background: none;
+			border: none;
+			float: left;
+		}
+	
+		form label {
+			float: left;
+			font-size: 13px;
+			width: 110px;
+		}
+		
+	form fieldset fieldset label {
+		background:none no-repeat left 50%;
+		line-height: 20px;
+		padding: 0 0 0 30px;
+		width: auto;
+	}
+	
+	form input:not([type=radio]),
+		form textarea {
+			background: #ffffff;
+			border: none;
+			-moz-border-radius: 3px;
+			-webkit-border-radius: 3px;
+			-khtml-border-radius: 3px;
+			border-radius: 3px;
+			font: italic 13px Georgia, "Times New Roman", Times, serif;
+			outline: none;
+			padding: 5px;
+			width: 200px;
+			}
