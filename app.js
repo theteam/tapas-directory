@@ -27,16 +27,14 @@ app.use(express.cookieDecoder());
 // HTTP method to support app.put(), app.del() etc
 app.use(express.methodOverride());
 
-
-
 // Our Tapas module.
-var tapas = {};
+exports.tapas = tapas = {};
 tapas.port = 3000;
+tapas.server = app;
 tapas.directory = {};
 tapas.directory.name = "People directory";
 tapas.directory.version = 0.1;
 tapas.directory.pageSize = 10;
-
 
 /*
 	API routes
@@ -109,9 +107,7 @@ tapas.directory.asHTML = function(data) {
 
 
 // Giddy up!
-app.listen(tapas.port);
-console.log('Tapas being served on port ' + tapas.port);
-
+//app.listen(tapas.port); // now gets initiated in index.js
 
 // Some dummy data to be replaced with data from a real data source.
 var dummy = {};

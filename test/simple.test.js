@@ -1,5 +1,14 @@
-var server = require('../app');
+var http = require('http');
+var server = require('../app').tapas.server;
 
-server.get('/test', function(req, res){
-	res.send("hello");
-});
+module.exports = {
+    'test assert.response()': function(assert, beforeExit){
+
+        assert.response(server, {
+            url: '/0.1/users/json',
+            method: 'GET'
+        },{
+            status: 200       
+        });
+	}
+};
