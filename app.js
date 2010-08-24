@@ -28,6 +28,8 @@ app.use(express.cookieDecoder());
 app.use(express.methodOverride());
 
 
+
+// Our Tapas module.
 var tapas = {};
 tapas.port = 3000;
 tapas.directory = {};
@@ -36,18 +38,9 @@ tapas.directory.version = 0.1;
 tapas.directory.pageSize = 10;
 
 
-
-
-
-var dummy = {};
-dummy.users = {"users": [{"name": "Phil Hawksworth", "department": "Digital"}, {"name": "Robbie Clutton", "department": "Digital"}, {"name": "Ben Barnett", "department": "Digital"}, {"name": "Oliver Polden", "department": "Digital"}] };
-
 /*
 	API routes
 */
-
-
-
 
 // Get the users
 app.get('/'+ tapas.directory.version + '/users/:format', function(req, res){
@@ -69,7 +62,6 @@ app.get('/'+ tapas.directory.version + '/users', function(req, res){
 });
 
 
-
 /*
 	Admin routes
 */
@@ -82,16 +74,12 @@ app.get('/admin', function(req, res){
 });
 
 
-
-
 /*
 	Module functions
 */
 
-
 // Get the users from the data store
 tapas.directory.getUsers = function() {
-	console.log('fetch the data');
 	return dummy.users;
 };
 
@@ -120,8 +108,11 @@ tapas.directory.asHTML = function(data) {
 
 
 
-
-
 // Giddy up!
 app.listen(tapas.port);
 console.log('Tapas being served on port ' + tapas.port);
+
+
+// Some dummy data to be replaced with data from a real data source.
+var dummy = {};
+dummy.users = {"users": [{"name": "Phil Hawksworth", "department": "Digital"}, {"name": "Robbie Clutton", "department": "Digital"}, {"name": "Ben Barnett", "department": "Digital"}, {"name": "Oliver Polden", "department": "Digital"}] };
