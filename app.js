@@ -29,8 +29,8 @@ app.use(express.methodOverride());
 
 // Our Tapas module.
 exports.tapas = tapas = {};
-tapas.port = 3000;
 tapas.server = app;
+tapas.port = 3000;
 tapas.directory = {};
 tapas.directory.name = "People directory";
 tapas.directory.version = 0.1;
