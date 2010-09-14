@@ -2,3 +2,4 @@ node 0.1.102
     module senchalabs connect
     module visionmedia express
     module visionmedia ejs
+	module theteam tapas-models
