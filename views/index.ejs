@@ -3,15 +3,19 @@
 	<h2>administration view</h2>
 </header>
 
-<form action="/user" method="post">
+<form action="/users" method="post">
 		
 	<fieldset> 
 		<legend>User details</legend> 
 		<ol> 
 			<li> 
-				<label for="name">Name</label> 
-				<input id=name name="name" type="text" placeholder="First and last name" required autofocus> 
-			</li> 
+				<label for="first">First name</label> 
+				<input id="first" name="first" type="text" placeholder="Joe" required autofocus> 
+			</li>
+			<li> 
+				<label for="last">Last name</label> 
+				<input id="last" name="last" type="text" placeholder="Bloggs" required> 
+			</li>			
 			<li> 
 				<label for="email">Email</label> 
 				<input id="email" name="email" type="email" placeholder="youremail@domain.com" required> 
@@ -20,7 +24,35 @@
 				<label for="phone">Phone</label> 
 				<input id="phone" name="phone" type="tel" placeholder="Eg. +447500000000" required> 
 			</li> 
-				
+			<li>
+				<label for="company">Company</label>
+				<select>
+					<option value="loewygroup">Loewy Group</option>
+					<option value="theteam">theTeam</option>
+					<option value="teampublishing">Team Publishing</option>
+					<option value="epoch">Epoch</option>
+					<option value="prescient">Prescient</option>
+					<option value="speed">Speed</option>
+					<option value="williamsmurrayhamm">Williams Murray Hamm</option>
+					<option value="seymourpowell">Seymour Powell</option>
+					<option value="branded">Branded</option>
+				</select>
+			</li>
+			<li>
+				<label for="department">Department</label>
+				<input id="department" name="department" type="text" placeholder="e.g. Sales">
+			</li>
+			<li>
+				<label for="address">Address</label>
+				<input id="address" name="address" type="text" placeholder="30 Park Street, London, SE1 9EQ">
+			</li>	
+			<li>
+				<label for="bio">Bio</label>
+				<textarea id="bio" name="bio" type="text" placeholder="I'm awesome!"></textarea>
+			</li>		
+			<li>
+				<input type="submit" value="Create" />	
+			</li>
 		</ol> 
 	</fieldset>
 

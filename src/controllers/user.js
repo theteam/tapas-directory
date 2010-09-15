@@ -3,7 +3,7 @@ var controller = {};
 var tapas = module.parent.exports.tapas;
 
 controller.index = function(req, res){
-	res.redirect('/' + tapas.directory.version + '/users/json');	
+	res.redirect('/users/json');	
 };
 
 controller.list = function(req, res){
@@ -14,22 +14,46 @@ controller.list = function(req, res){
 		'html': tapas.directory.asHTML
 	};
 
-	console.log('Delivering users as '+ req.params.format);
-	res.send( formatter[req.params.format](tapas.directory.getUsers()) );
+	User.find({}).all(function(data){
+		console.log('Delivering users as '+ req.params.format);
+		var stuff = formatter[req.params.format](data);
+		console.log(stuff);
+		res.send(stuff, { 'Content-Type': 'application/json' });
+	});
+
+};
+
+controller.create = function(req, res){
+	var user = new User();
+	user.first = req.body.first;
+	user.last = req.body.last;
+	user.username = req.body.first.toLowerCase() + req.body.last.toLowerCase();
+	user.phone = req.body.phone;
+	user.company = req.body.company;
+	user.department = req.body.department;
+	user.address = req.body.address;
+	user.bio = req.body.bio;
+	
+	user.save(function(){
+		res.redirect('/user/' + user.username);
+	});
+};
+
+controller.show = function(req, res){
+	User.find({username:req.params.username}).first(function(data){
+		res.render('user_show.ejs', {
+			locals:{user:data}
+		});
+	});	
 };
 
 /*
 	Module functions
 */
 
-// Get the users from the data store
-tapas.directory.getUsers = function() {
-	return dummy.users;
-};
-
-
 // Return data formated as JSON
 tapas.directory.asJSON = function(data) {
+	//return data;
 	return JSON.stringify(data);
 };
 
@@ -43,16 +67,11 @@ tapas.directory.asJSONP = function(data) {
 // Return data formated as an HTML fragment. (hCards)
 tapas.directory.asHTML = function(data) {
 	var html = '<ul>';
-	for (var i=0; i < data.users.length; i++) {
-		html += "<li>" + data.users[i].name + "</li>";
+	for (var i=0; i < data.length; i++) {
+		html += "<li>" + data[i].full_name + "</li>";
 	};
 	html += '</ul>';
 	return html;
 };
-
-// Some dummy data to be replaced with data from a real data source.
-var dummy = {};
-dummy.users = {"users": [{"name": "Phil Hawksworth", "department": "Digital"}, {"name": "Robbie Clutton", "department": "Digital"}, {"name": "Ben Barnett", "department": "Digital"}, {"name": "Oliver Polden", "department": "Digital"}] };
-
 
 module.exports = controller;

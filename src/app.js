@@ -43,8 +43,10 @@ tapas.directory.controllers.user = require('./controllers/user');
 */
 
 // Get the users
-app.get('/'+ tapas.directory.version + '/users/:format', tapas.directory.controllers.user.list);
-app.get('/'+ tapas.directory.version + '/users', tapas.directory.controllers.user.index);
+app.get('/users/:format', tapas.directory.controllers.user.list);
+app.get('/users', tapas.directory.controllers.user.index);
+app.post('/users', tapas.directory.controllers.user.create);
+app.get('/user/:username', tapas.directory.controllers.user.show);
 
 /*
 	Admin routes
