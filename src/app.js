@@ -53,6 +53,7 @@ app.get('/users/create', tapas.directory.controllers.user.createform);
 app.get('/users.:format', tapas.directory.controllers.user.list);
 app.get('/users', tapas.directory.controllers.user.index);
 app.post('/users', tapas.directory.controllers.user.create);
+app.get('/users/:username.:format', tapas.directory.controllers.user.showformat);
 app.get('/users/:username', tapas.directory.controllers.user.show);
 app.post('/users/:username', tapas.directory.controllers.user.update);
 app.get('/users/:username/edit', tapas.directory.controllers.user.edit);

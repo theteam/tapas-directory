@@ -18,6 +18,14 @@ var controller = {};
 var tapas = module.parent.exports.tapas;
 var crypto = require('crypto');
 
+var formatter = {
+	'jsonp': tapas.directory.asJSONP,
+	'json': tapas.directory.asJSON,
+	'html': tapas.directory.asHTML,
+	'inc': tapas.directory.asHTML,
+	'ahah': tapas.directory.asHTML
+};
+
 controller.index = function(req, res){
 	User.find({}).all(function(data){
 		logger.debug('Delivering users as '+ req.params.format);
@@ -27,14 +35,6 @@ controller.index = function(req, res){
 
 controller.list = function(req, res){
 	// Formatter functions for output. 
-	formatter = {
-		'jsonp': tapas.directory.asJSONP,
-		'json': tapas.directory.asJSON,
-		'html': tapas.directory.asHTML,
-		'inc': tapas.directory.asHTML,
-		'ahah': tapas.directory.asHTML
-	};
-	
 	if (formatter[req.params.format]){
 		User.find({}).all(function(data){
 			logger.debug('Delivering users as '+ req.params.format);
@@ -84,6 +84,21 @@ controller.show = function(req, res){
 			locals:{user:data}
 		});
 	});	
+};
+
+controller.showformat = function(req, res){
+	logger.debug('looking up user ' + req.params.username + ' with format ' + req.params.format);
+	User.find({username:req.params.username}).first(function(data){
+		if (req.params.format == 'json'){
+			tapas.directory.asJSON(data, res);
+		} else if (req.params.format == 'jsonp'){
+			tapas.directory.asJSONP(data, res);
+		} else if (req.params.format.match('ahah|html|inc')) {
+			res.render('user_show.ejs', {
+				locals:{user:data}
+			});
+		}
+	});
 };
 
 controller.edit = function(req, res){
@@ -136,7 +151,9 @@ tapas.directory.asJSON = function(data, res) {
 // Return data formated as JSONP
 tapas.directory.asJSONP = function(data, res) {
 	res.headers['content-type'] = 'application/javascript';
-	var result = 'jsCallback('+JSON.stringify(data)+')';
+	var callback = req.query.callback || 'callback';
+	var result = callback + '('+JSON.stringify(data)+')';
+	res.send(result);
 };
 
 
