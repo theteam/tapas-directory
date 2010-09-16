@@ -1,4 +1,3 @@
-
 # Tapas Directory
 
 A Tapas (Team Application Platform And Services) module which provides a user directory API and admin interface.
@@ -24,12 +23,6 @@ This build script should also start the application, run tests against it and th
 
 ## The API
 
-Tapas is heavily API driven and is intended to provide your applications with a performant API layer and a simple admin area to manage your content.  The Tapas Directory API is structured like so:
-
-	/directory/<API-VERSION>/<NOUN>/<OUTPUT-FORMAT>
-	
-For example:
-
-	/directory/0.1/users/jsonp
+Tapas is heavily API driven and is intended to provide your applications with a performant API layer and a simple admin area to manage your content.  
 
 
