@@ -3,6 +3,7 @@ module senchalabs connect
 module visionmedia express
 module visionmedia ejs
 module theteam tapas-models
+module csausdev log4js-node
 
 ##########################
 # As ndistro is just a bash script

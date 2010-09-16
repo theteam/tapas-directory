@@ -3,6 +3,9 @@
 var sys = require('sys');
 var fs = require('fs');
 
+// create log directory if required
+fs.mkdir('log', 0700);
+
 // module dependencies
 // filesystem references are post correct after running ndistro
 var express = require('express');
@@ -43,7 +46,7 @@ tapas.directory.controllers.user = require('./controllers/user');
 */
 
 // Get the users
-app.get('/users/:format', tapas.directory.controllers.user.list);
+app.get('/users.:format', tapas.directory.controllers.user.list);
 app.get('/users', tapas.directory.controllers.user.index);
 app.post('/users', tapas.directory.controllers.user.create);
 app.get('/user/:username', tapas.directory.controllers.user.show);
