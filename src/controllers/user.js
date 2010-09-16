@@ -18,14 +18,6 @@ var controller = {};
 var tapas = module.parent.exports.tapas;
 var crypto = require('crypto');
 
-var formatter = {
-	'jsonp': tapas.directory.asJSONP,
-	'json': tapas.directory.asJSON,
-	'html': tapas.directory.asHTML,
-	'inc': tapas.directory.asHTML,
-	'ahah': tapas.directory.asHTML
-};
-
 controller.index = function(req, res){
 	User.find({}).all(function(data){
 		logger.debug('Delivering users as '+ req.params.format);
@@ -34,11 +26,27 @@ controller.index = function(req, res){
 };
 
 controller.list = function(req, res){
+	var query = {};
+	if (req.query.company)
+		query["company"] = new RegExp(req.query.company, 'i');
+	if (req.query.first)
+		query["first"] = new RegExp(req.query.first,'i');
+	if (req.query.last)
+		query["last"] = new RegExp(req.query.last, 'i');
+		
+	logger.debug('looking up users with query ' + JSON.stringify(query));
 	// Formatter functions for output. 
+	var formatter = {
+		'jsonp': tapas.directory.asJSONP,
+		'json': tapas.directory.asJSON,
+		'html': tapas.directory.asHTML,
+		'inc': tapas.directory.asHTML,
+		'ahah': tapas.directory.asHTML
+	};
 	if (formatter[req.params.format]){
-		User.find({}).all(function(data){
+		User.find(query).all(function(data){
 			logger.debug('Delivering users as '+ req.params.format);
-			formatter[req.params.format](data, res);	
+			formatter[req.params.format](data, req, res);	
 		});
 	} else {
 		logger.warn('unknown format (' + req.params.format + '), returning 415');
@@ -97,6 +105,9 @@ controller.showformat = function(req, res){
 			res.render('user_show.ejs', {
 				locals:{user:data}
 			});
+		} else {
+			logger.warn('unknown format (' + req.params.format + '), returning 415');
+			res.send("No known format", 415); // 415 is unknown media type, e.g. html, json etc
 		}
 	});
 };
@@ -141,7 +152,7 @@ controller.update = function(req, res){
 */
 
 // Return data formated as JSON
-tapas.directory.asJSON = function(data, res) {
+tapas.directory.asJSON = function(data, req, res) {
 	res.headers['content-type'] = 'application/json';
 	var result = JSON.stringify(data);
 	res.send(result);
@@ -149,7 +160,7 @@ tapas.directory.asJSON = function(data, res) {
 
 
 // Return data formated as JSONP
-tapas.directory.asJSONP = function(data, res) {
+tapas.directory.asJSONP = function(data, req, res) {
 	res.headers['content-type'] = 'application/javascript';
 	var callback = req.query.callback || 'callback';
 	var result = callback + '('+JSON.stringify(data)+')';
@@ -158,7 +169,7 @@ tapas.directory.asJSONP = function(data, res) {
 
 
 // Return data formated as an HTML fragment. (hCards)
-tapas.directory.asHTML = function(data, res) {
+tapas.directory.asHTML = function(data, req, res) {
 	res.render('user_list.ejs', {
 		locals:{users:data}
 	});
