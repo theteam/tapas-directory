@@ -35,6 +35,10 @@ controller.create = function(req, res){
 	user.bio = req.body.bio;
 	user.imageUri = req.body.imageuri;
 	user.email = req.body.email;
+	user.clients = req.body.clients;
+	user.skills = req.body.skills.split(",");
+	for (i = 0; i < user.skills.length; i++)
+		user.skills[i] = user.skills[i].trim();
 	
 	user.save(function(){
 		res.redirect('/user/' + user.username);
