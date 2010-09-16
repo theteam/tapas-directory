@@ -16,6 +16,7 @@ logger.setLevel('DEBUG');
 var User = require('../../modules/tapas-models').User;
 var controller = {};
 var tapas = module.parent.exports.tapas;
+var crypto = require('crypto');
 
 controller.index = function(req, res){
 	User.find({}).all(function(data){
@@ -62,8 +63,8 @@ controller.create = function(req, res){
 	user.department = req.body.department;
 	user.address = req.body.address;
 	user.bio = req.body.bio;
-	user.imageUri = req.body.imageuri;
 	user.email = req.body.email;
+	user.imageUri = req.body.imageuri || 'http://gravatar.com/avatar/' + crypto.createHash('md5').update(user.email).digest('hex');
 	user.clients = req.body.clients;
 	user.skills = req.body.skills.split(",");
 	for (i = 0; i < user.skills.length; i++)
