@@ -1,2 +1,26 @@
 <h1><%= user.full_name %></h1>
-<a href="/users">list 'em all</a>
+
+<div class="vcard">
+	<div class="photo">
+		<img src="<%= user.imageUri %>" alt="<%= user.full_name %>">
+	</div>
+	<div class="adr">
+		<span class="type">Work:</span>
+		<div class="street-address"><%= user.address %></div>
+	</div>
+	<div class="tel">
+		<span class="type">Work:</span><%= user.phone %>
+	</div>
+	<div>Email: 
+		<span class="email"><%= user.email %></span>
+	</div>
+	<div class="bio">
+		<%= user.bio %>
+	</div>
+</div>
+
+<a rel="profile" href="http://microformats.org/profile/hcard"><img src="/images/microformat_hcard.png" alt="hcard logo"></a>
+
+<div>
+<a href="/users">list 'em all</a> | <a href="/users/<%= user.username %>/edit">edit</a>
+</div>

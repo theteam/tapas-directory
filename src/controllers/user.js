@@ -18,8 +18,10 @@ var controller = {};
 var tapas = module.parent.exports.tapas;
 
 controller.index = function(req, res){
-	logger.debug('redirecting /users to .html');
-	res.redirect('/users.html');	
+	User.find({}).all(function(data){
+		logger.debug('Delivering users as '+ req.params.format);
+		tapas.directory.asHTML(data, res);	
+	});	
 };
 
 controller.list = function(req, res){
@@ -44,6 +46,12 @@ controller.list = function(req, res){
 
 };
 
+controller.createform = function(req, res){
+	res.render('user_create.ejs', {
+		locals:{ "moduleName": tapas.directory.name }
+	});
+};
+
 controller.create = function(req, res){
 	var user = new User();
 	user.first = req.body.first;
@@ -64,7 +72,7 @@ controller.create = function(req, res){
 	logger.debug('creating new user: ' + user.username);
 	
 	user.save(function(){
-		res.redirect('/user/' + user.username);
+		res.redirect('/users/' + user.username);
 	});
 };
 
@@ -75,6 +83,41 @@ controller.show = function(req, res){
 			locals:{user:data}
 		});
 	});	
+};
+
+controller.edit = function(req, res){
+	logger.debug('looking up user ' + req.params.username);
+	User.find({username:req.params.username}).first(function(data){
+		res.render('user_edit', {
+			locals:{user:data, "moduleName": tapas.directory.name}
+		});
+	});
+};
+
+controller.update = function(req, res){
+	logger.debug('looking up user ' + req.params.username);
+	User.find({username:req.params.username}).first(function(data){
+		var user = data;
+		user.first = req.body.first || data.first;
+		user.last = req.body.last || data.last;
+		user.phone = req.body.phone || data.phone;
+		user.company = req.body.company || data.company;
+		user.department = req.body.department || data.department;
+		user.address = req.body.address || data.address;
+		user.bio = req.body.bio || data.bio;
+		user.imageUri = req.body.imageuri || data.imageUri;
+		user.email = req.body.email || data.email;
+		user.clients = req.body.clients || data.clients;
+		user.skills = req.body.skills.split(",");
+		for (i = 0; i < user.skills.length; i++)
+			user.skills[i] = user.skills[i].trim();
+
+		logger.debug('updating user: ' + user.username);
+
+		user.save(function(){
+			res.redirect('/users/' + user.username);
+		});
+	});
 };
 
 /*

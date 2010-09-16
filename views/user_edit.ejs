@@ -1,0 +1,73 @@
+<header>
+	<h1><%= moduleName %></h1>
+	<h2>Editing <%= user.full_name %></h2>
+</header>
+
+<form action="/users/<%= user.username %>" method="post">
+<fieldset> 
+	<legend>User details</legend> 
+	<ol> 
+		<li> 
+			<label for="first">First name</label> 
+			<input id="first" name="first" type="text" placeholder="Joe" value="<%= user.first %>" required> 
+		</li>
+		<li> 
+			<label for="last">Last name</label> 
+			<input id="last" name="last" type="text" placeholder="Bloggs" value="<%= user.last %>" required> 
+		</li>			
+		<li> 
+			<label for="email">Email</label> 
+			<input id="email" name="email" type="email" placeholder="youremail@domain.com" value="<%= user.email %>" required> 
+		</li> 
+		<li> 
+			<label for="phone">Phone</label> 
+			<input id="phone" name="phone" type="tel" placeholder="Eg. +447500000000" value="<%= user.phone %>" required> 
+		</li> 
+		<li>
+			<label for="company">Company</label>
+			<select id="company" name="company">
+				<option value="Loewy Group">Loewy Group</option>
+				<option value="theTeam">theTeam</option>
+				<option value="Team Publishing">Team Publishing</option>
+				<option value="Epoch">Epoch</option>
+				<option value="Prescient">Prescient</option>
+				<option value="Speed">Speed</option>
+				<option value="Williams Murray Hamm">Williams Murray Hamm</option>
+				<option value="Seymour Powell">Seymour Powell</option>
+				<option value="Branded">Branded</option>
+			</select>
+		</li>
+		<li>
+			<label for="department">Department</label>
+			<input id="department" name="department" type="text" placeholder="e.g. Sales" value="<%= user.department %>">
+		</li>
+		<li>
+			<label for="address">Address</label>
+			<input id="address" name="address" type="text" placeholder="30 Park Street, London, SE1 9EQ" value="<%= user.address %>"">
+		</li>
+		<li>
+			<label for="clients">Clients</label>
+			<select id="clients" name="clients" multiple="multiple">
+				<option value="Logica">Logica</option>
+				<option value="Secret Sales">Secret Sales</option>
+				<option value="Universal Music">Universal Music</option>
+			</select>
+		</li>	
+		<li>
+			<label for="bio">Bio</label>
+			<textarea id="bio" name="bio" type="text" placeholder="I'm awesome!"><%= user.bio %></textarea>
+		</li>	
+		<li>
+			<label for="skills">Skills (comma separated)</label>
+			<input id="skills" name="skills" type="text" placeholder="dancing,juggling,project management" value="<%= user.skills %>">
+		</li>	
+		<li>
+			<label for="imageuri">Image URI</label>
+			<input id="imageuri" name="imageuri" type="url" value="<%= user.imageUri %>">
+		</li>
+		<li>
+			<input type="submit" value="Create" />	
+		</li>
+	</ol> 
+</fieldset>
+</form>

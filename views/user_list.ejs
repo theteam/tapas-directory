@@ -1,5 +1,7 @@
 <ul>
 	<% for(var i=0; i<users.length; i++) {%>
-	   <li><%= users[i].full_name %></li>
+	   <li><a href="/users/<%= users[i].username%>"><%= users[i].full_name %></a></li>
 	<% } %>
 </ul>
+
+<a href="/users/create">Create</a>
