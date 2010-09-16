@@ -16,9 +16,9 @@ controller.list = function(req, res){
 
 	User.find({}).all(function(data){
 		console.log('Delivering users as '+ req.params.format);
-		var stuff = formatter[req.params.format](data);
+		var stuff = formatter[req.params.format](data, res);
 		console.log(stuff);
-		res.send(stuff, { 'Content-Type': 'application/json' });
+		res.send(stuff);
 	});
 
 };
@@ -58,14 +58,15 @@ controller.show = function(req, res){
 */
 
 // Return data formated as JSON
-tapas.directory.asJSON = function(data) {
-	//return data;
+tapas.directory.asJSON = function(data, res) {
+	res.headers['content-type'] = 'application/json';
 	return JSON.stringify(data);
 };
 
 
 // Return data formated as JSONP
-tapas.directory.asJSONP = function(data) {
+tapas.directory.asJSONP = function(data, res) {
+	res.headers['content-type'] = 'application/javascript';
 	return 'jsCallback('+JSON.stringify(data)+')';
 };
 
