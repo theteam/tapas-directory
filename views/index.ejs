@@ -8,9 +8,13 @@
 	<fieldset> 
 		<legend>User details</legend> 
 		<ol> 
+			<li>
+				<label for="username">Username</label>
+				<input id="username" name="username" type="text" placeholder="joebloggs" autofocus>
+			</li>
 			<li> 
 				<label for="first">First name</label> 
-				<input id="first" name="first" type="text" placeholder="Joe" required autofocus> 
+				<input id="first" name="first" type="text" placeholder="Joe" required> 
 			</li>
 			<li> 
 				<label for="last">Last name</label> 
@@ -26,16 +30,16 @@
 			</li> 
 			<li>
 				<label for="company">Company</label>
-				<select>
-					<option value="loewygroup">Loewy Group</option>
-					<option value="theteam">theTeam</option>
-					<option value="teampublishing">Team Publishing</option>
-					<option value="epoch">Epoch</option>
-					<option value="prescient">Prescient</option>
-					<option value="speed">Speed</option>
-					<option value="williamsmurrayhamm">Williams Murray Hamm</option>
-					<option value="seymourpowell">Seymour Powell</option>
-					<option value="branded">Branded</option>
+				<select id="company" name="company">
+					<option value="Loewy Group">Loewy Group</option>
+					<option value="theTeam">theTeam</option>
+					<option value="Team Publishing">Team Publishing</option>
+					<option value="Epoch">Epoch</option>
+					<option value="Prescient">Prescient</option>
+					<option value="Speed">Speed</option>
+					<option value="Williams Murray Hamm">Williams Murray Hamm</option>
+					<option value="Seymour Powell">Seymour Powell</option>
+					<option value="Branded">Branded</option>
 				</select>
 			</li>
 			<li>
@@ -50,6 +54,10 @@
 				<label for="bio">Bio</label>
 				<textarea id="bio" name="bio" type="text" placeholder="I'm awesome!"></textarea>
 			</li>		
+			<li>
+				<label for="imageuri">Image URI</label>
+				<input id="imageuri" name="imageuri" type="url">
+			</li>
 			<li>
 				<input type="submit" value="Create" />	
 			</li>

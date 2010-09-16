@@ -27,12 +27,14 @@ controller.create = function(req, res){
 	var user = new User();
 	user.first = req.body.first;
 	user.last = req.body.last;
-	user.username = req.body.first.toLowerCase() + req.body.last.toLowerCase();
+	user.username = req.body.username.toLowerCase() || req.body.first.toLowerCase() + req.body.last.toLowerCase();
 	user.phone = req.body.phone;
 	user.company = req.body.company;
 	user.department = req.body.department;
 	user.address = req.body.address;
 	user.bio = req.body.bio;
+	user.imageUri = req.body.imageuri;
+	user.email = req.body.email;
 	
 	user.save(function(){
 		res.redirect('/user/' + user.username);
