@@ -21,7 +21,7 @@ var crypto = require('crypto');
 controller.index = function(req, res){
 	User.find({}).all(function(data){
 		logger.debug('Delivering users as '+ req.params.format);
-		tapas.directory.asHTML(data, res);	
+		tapas.directory.asHTML(data, req, res);	
 	});	
 };
 
