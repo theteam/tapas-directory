@@ -19,10 +19,8 @@ var tapas = module.parent.exports.tapas;
 var crypto = require('crypto');
 
 controller.index = function(req, res){
-	User.find({}).all(function(data){
-		logger.debug('Delivering users as '+ req.params.format);
-		tapas.directory.asHTML(data, req, res);	
-	});	
+	req.params.format = 'html';
+	controller.list(req, res);	
 };
 
 controller.list = function(req, res){
@@ -86,12 +84,8 @@ controller.create = function(req, res){
 };
 
 controller.show = function(req, res){
-	logger.debug('looking up user ' + req.params.username);
-	User.find({username:req.params.username}).first(function(data){
-		res.render('user_show.ejs', {
-			locals:{user:data}
-		});
-	});	
+	req.params.format = 'html';
+	controller.showformat(req, res);
 };
 
 controller.showformat = function(req, res){
