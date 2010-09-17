@@ -38,8 +38,8 @@ controller.list = function(req, res){
 		'jsonp': tapas.directory.asJSONP,
 		'json': tapas.directory.asJSON,
 		'html': tapas.directory.asHTML,
-		'inc': tapas.directory.asHTML,
-		'ahah': tapas.directory.asHTML
+		'inc': tapas.directory.asAHAH,
+		'ahah': tapas.directory.asAHAH
 	};
 	if (formatter[req.params.format]){
 		User.find(query).all(function(data){
@@ -95,7 +95,12 @@ controller.showformat = function(req, res){
 			tapas.directory.asJSON(data, res);
 		} else if (req.params.format == 'jsonp'){
 			tapas.directory.asJSONP(data, res);
-		} else if (req.params.format.match('ahah|html|inc')) {
+		} else if (req.params.format.match('ahah|inc')) {
+			res.render('user_show.ejs', {
+				locals:{user:data},
+				layout:false
+			});
+		} else if (req.params.format == 'html'){
 			res.render('user_show.ejs', {
 				locals:{user:data}
 			});
@@ -162,10 +167,18 @@ tapas.directory.asJSONP = function(data, req, res) {
 };
 
 
-// Return data formated as an HTML fragment. (hCards)
+// Return data formated as an HTML 
 tapas.directory.asHTML = function(data, req, res) {
 	res.render('user_list.ejs', {
 		locals:{users:data}
+	});
+};
+
+// Return data formated as an HTML fragment. (hCards)
+tapas.directory.asAHAH = function(data, req, res) {
+	res.render('user_list.ejs', {
+		locals:{users:data},
+		layout: false
 	});
 };
 
