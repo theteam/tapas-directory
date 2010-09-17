@@ -59,28 +59,21 @@ controller.createform = function(req, res){
 	});
 };
 
-controller.create = function(req, res){
-	var user = new User();
-	user.first = req.body.first;
-	user.last = req.body.last;
-	user.username = req.body.username.toLowerCase() || req.body.first.toLowerCase() + req.body.last.toLowerCase();
-	user.phone = req.body.phone;
-	user.company = req.body.company;
-	user.department = req.body.department;
-	user.address = req.body.address;
-	user.bio = req.body.bio;
-	user.email = req.body.email;
-	user.imageUri = req.body.imageuri || 'http://gravatar.com/avatar/' + crypto.createHash('md5').update(user.email).digest('hex');
-	user.clients = req.body.clients;
-	user.skills = req.body.skills.split(",");
-	for (i = 0; i < user.skills.length; i++)
-		user.skills[i] = user.skills[i].trim();
+controller.create = function(req, res, next){
 	
-	logger.debug('creating new user: ' + user.username);
+	req.form.complete(function(err, fields, files){
+        if (err) {
+            next(err);
+        } else {
 	
-	user.save(function(){
-		res.redirect('/users/' + user.username);
-	});
+			var user = new User();
+			user.username = fields.username.toLowerCase() || fields.first.toLowerCase() + fields.last.toLowerCase();
+			logger.debug('creating new user: ' + user.username);
+			tapas.directory.addOrUpdateUser(user, fields, files, res);
+
+        }
+    });
+	
 };
 
 controller.show = function(req, res){
@@ -124,26 +117,19 @@ controller.update = function(req, res){
 	logger.debug('looking up user ' + req.params.username);
 	User.find({username:req.params.username}).first(function(data){
 		var user = data;
-		user.first = req.body.first || data.first;
-		user.last = req.body.last || data.last;
-		user.phone = req.body.phone || data.phone;
-		user.company = req.body.company || data.company;
-		user.department = req.body.department || data.department;
-		user.address = req.body.address || data.address;
-		user.bio = req.body.bio || data.bio;
-		user.imageUri = req.body.imageuri || data.imageUri;
-		user.email = req.body.email || data.email;
-		user.clients = req.body.clients || data.clients;
-		user.skills = req.body.skills.split(",");
-		for (i = 0; i < user.skills.length; i++)
-			user.skills[i] = user.skills[i].trim();
+		req.form.complete(function(err, fields, files){
+	        if (err) {
+	            next(err);
+	        } else {
+				user.username = fields.username.toLowerCase() || fields.first.toLowerCase() + fields.last.toLowerCase();
+				logger.debug('creating new user: ' + user.username);
+				tapas.directory.addOrUpdateUser(user, fields, files, res);
 
-		logger.debug('updating user: ' + user.username);
-
-		user.save(function(){
-			res.redirect('/users/' + user.username);
-		});
+	        }
+	    });
 	});
+	
+	
 };
 
 /*
@@ -179,6 +165,29 @@ tapas.directory.asAHAH = function(data, req, res) {
 	res.render('user_list.ejs', {
 		locals:{users:data},
 		layout: false
+	});
+};
+
+tapas.directory.addOrUpdateUser = function(user, fields, files, res){
+	
+	logger.debug(JSON.stringify(files.image));
+	
+	user.first = fields.first || user.first;
+	user.last = fields.last || user.last;
+	user.phone = fields.phone || user.phone;
+	user.company = fields.company || user.company;
+	user.department = fields.department || user.department;
+	user.address = fields.address || user.address;
+	user.bio = fields.bio || user.bio;
+	user.email = fields.email || user.email;
+	user.imageUri = fields.imageuri || files.image.filename || user.imageUri || 'http://gravatar.com/avatar/' + crypto.createHash('md5').update(user.email).digest('hex');
+	user.clients = fields.clients || user.clients;
+	user.skills = fields.skills.split(",");
+	for (i = 0; i < user.skills.length; i++)
+		user.skills[i] = user.skills[i].trim();
+
+	user.save(function(){
+		res.redirect('/users/' + user.username);
 	});
 };
 

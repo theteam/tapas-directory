@@ -1,5 +1,7 @@
 node 0.1.102
 module senchalabs connect
+module visionmedia connect-form
+module felixge node-formidable
 module visionmedia express
 module visionmedia ejs
 module theteam tapas-models

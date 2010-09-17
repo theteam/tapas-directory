@@ -3,16 +3,22 @@
 var sys = require('sys');
 var fs = require('fs');
 
-// create log directory if required
+// create log directory if required - creates lint warning
 fs.mkdir('log', 0700);
 
 // module dependencies
 // filesystem references are post correct after running ndistro
 var express = require('express');
+var form = require('connect-form');
 var ejs = require('ejs');
 
 // config
-var app = express.createServer();
+var app = express.createServer(
+    // connect-form (http://github.com/visionmedia/connect-form)
+    // middleware uses the formidable middleware to parse urlencoded
+    // and multipart form data
+    form({ keepExtensions: true, uploadDir:__dirname + '/../public/images/uploaded/' })
+);
 app.use(express.staticProvider(__dirname + '/../public'));
 app.set('views', __dirname + '/../views');
 app.set('view engine', 'ejs');
