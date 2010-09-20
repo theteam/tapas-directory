@@ -28,7 +28,7 @@ var authController = require('./controllers/auth');
 
 // config
 var app = express.createServer(
-	auth([auth.Basichash({validatePassword: authController.validatePassword})])
+	auth([auth.Basic({validatePassword: authController.validatePassword})])
 );
 app.use(express.staticProvider(__dirname + '/../public'));
 app.set('views', __dirname + '/../views');
