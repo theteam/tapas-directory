@@ -65,6 +65,7 @@ controller.create = function(req, res){
 	user.last = req.body.last;
 	user.username = req.body.username.toLowerCase() || req.body.first.toLowerCase() + req.body.last.toLowerCase();
 	user.phone = req.body.phone;
+	user.password = User.encryptPassword(req.body.password);
 	user.company = req.body.company;
 	user.department = req.body.department;
 	user.address = req.body.address;
