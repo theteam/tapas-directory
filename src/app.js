@@ -59,6 +59,7 @@ tapas.directory.version = 0.1;
 tapas.directory.pageSize = 10;
 tapas.directory.controllers = {};
 tapas.directory.controllers.user = require('./controllers/user');
+tapas.directory.controllers.client = require('./controllers/client');
 tapas.directory.controllers.auth = authController;
 
 /*
@@ -71,25 +72,25 @@ app.get('/', function(req, res){
 });
 app.get('/users/create', function(req, res){
 	logger.debug('protecting GET /users/create');
-	req.authenticate(['basichash'], function(error, authenticated) { 
+	req.authenticate(['basic'], function(error, authenticated) { 
 		tapas.directory.controllers.user.createform(req, res);
 	});
 });
 app.post('/users', function(req, res){
 	logger.debug('protecting POST /users');
-	req.authenticate(['basichash'], function(error, authenticated) {
+	req.authenticate(['basic'], function(error, authenticated) {
 		tapas.directory.controllers.user.create(req, res);
 	});
 });
 app.post('/users/:username', function(req, res){
 	logger.debug('protecting POST /users/username');
-	req.authenticate(['basichash'], function(error, authenticated){
+	req.authenticate(['basic'], function(error, authenticated){
 		tapas.directory.controllers.user.update(req, res);		
 	});
 });
 app.get('/users/:username/edit', function(req, res) {
 	logger.debug('protecting GET /users/username/edit');
-	req.authenticate(['basichash'], function(error, authenticated){
+	req.authenticate(['basic'], function(error, authenticated){
 		tapas.directory.controllers.user.edit(req, res);
 	});
 });
@@ -98,7 +99,19 @@ app.get('/users', tapas.directory.controllers.user.index);
 app.get('/users/:username.:format', tapas.directory.controllers.user.showformat);
 app.get('/users/:username', tapas.directory.controllers.user.show);
 
+// Clients
 
+app.get('/clients', tapas.directory.controllers.client.list);
+app.get('/clients/create', tapas.directory.controllers.client.createform);
+app.post('/clients', tapas.directory.controllers.client.create);
+//app.get('/clients', function(req, res){
+//	logger.debug('protecting /clients');
+//	req.authenticate(['basic'], function(error, authenticated){
+//		tapas.directory.controllers.client.list(req, res);
+//	});
+//});
+
+// authentication
 app.get('/logout', tapas.directory.controllers.auth.logout);
 
 /*
