@@ -135,9 +135,6 @@ controller.edit = function(req, res){
 				locals:{user:user, "moduleName": tapas.directory.name, clients:clients}
 			});
 		});
-		
-		
-		
 
 	});
 };

@@ -26,15 +26,15 @@
 		<li>
 			<label for="company">Company</label>
 			<select id="company" name="company">
-				<option value="Loewy Group">Loewy Group</option>
-				<option value="theTeam">theTeam</option>
-				<option value="Team Publishing">Team Publishing</option>
-				<option value="Epoch">Epoch</option>
-				<option value="Prescient">Prescient</option>
-				<option value="Speed">Speed</option>
-				<option value="Williams Murray Hamm">Williams Murray Hamm</option>
-				<option value="Seymour Powell">Seymour Powell</option>
-				<option value="Branded">Branded</option>
+				<option value="Loewy Group" <% if(user.company === 'Loewy Group'){ %>selected<% } %>>Loewy Group</option>
+				<option value="theTeam" <% if(user.company === 'theTeam'){ %>selected<% } %>>theTeam</option>
+				<option value="Team Publishing" <% if(user.company === 'Team Publishing'){ %>selected<% } %>>Team Publishing</option>
+				<option value="Epoch" <% if(user.company === 'Epoch'){ %>selected<% } %>>Epoch</option>
+				<option value="Prescient" <% if(user.company === 'Prescient'){ %>selected<% } %>>Prescient</option>
+				<option value="Speed" <% if(user.company === 'Speed'){ %>selected<% } %>>Speed</option>
+				<option value="Williams Murray Hamm" <% if(user.company === 'Williams Murray Hamm'){ %>selected<% } %>>Williams Murray Hamm</option>
+				<option value="Seymour Powell" <% if(user.company === 'Seymour Powell'){ %>selected<% } %>>Seymour Powell</option>
+				<option value="Branded" <% if(user.company === 'Branded'){ %>selected<% } %>>Branded</option>
 			</select>
 		</li>
 		<li>

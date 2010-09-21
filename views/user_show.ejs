@@ -17,6 +17,13 @@
 	<div class="bio">
 		<%= user.bio %>
 	</div>
+	<div class="clients">Clients:
+		<ul>
+			<% for(var i=0; i<user.clients.length; i++) {%>
+			   <li><%= user.clients[i] %></li>
+			<% } %>
+		</ul>
+	</div>
 </div>
 
 <a rel="profile" href="http://microformats.org/profile/hcard"><img src="/images/microformat_hcard.png" alt="hcard logo"></a>
