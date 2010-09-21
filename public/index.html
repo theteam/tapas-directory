@@ -1,0 +1,46 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+	<title>Talent Magnet</title> 
+	<meta name="generator" content="TextMate http://macromates.com/"> 
+	<meta name="layout" content="main"> 
+	<link rel="stylesheet" href="/styles/magnet-default.css" type="text/css" media="screen"> 
+	<link rel="stylesheet" href="/styles/shadowbox.css" type="text/css" media="screen"> 
+</head> 
+<body> 
+	<div id="wrapper"> 
+		<h1 id="title">magnet</h1>
+		<div id="filters">
+		<p><label for="skills">Skills</label>
+		<select id="skills">
+		</select>
+		<label for="department">Department</label>
+		<select id="department">
+		</select>	
+		<label for="company">Company</label>
+		<select id="company">
+		</select></p>
+		<p>
+		<label for="name">Name</label> <input type="text" name="name" value="" id="name">
+		<input type="button" id="showAll" value="Show All" />
+		</p>
+	</div>
+	<div id="container">
+		<div id="people" class="by5">			
+			<div style="clear:both;"></div>
+		</div>
+			
+		<div style="clear:both;"></div>
+	</div>
+	
+	<div id="lightbox"></div>
+	<script src="/scripts/contrib/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script> 
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script> 
+	<script src="/scripts/src/magnet.js" type="text/javascript" charset="utf-8"></script> 
+	<script src="/scripts/src/magnet.person.js" type="text/javascript" charset="utf-8"></script> 
+	<script src="/scripts/src/array.prototype.js" type="text/javascript" charset="utf-8"></script> 
+	<script src="/scripts/contrib/shadowbox.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/scripts/src/tapas-directory.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

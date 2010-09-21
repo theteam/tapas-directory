@@ -11,6 +11,6 @@
 	"image_uri":"<%= user_json.imageUri %>",
 	"bio":"<%= user_json.bio %>",
 	"updated_at":"<%= user_json.updated_at%>",
-	"skills":<%= JSON.stringify(user_json.skills) %>,
-	"clients":<%= JSON.stringify(user_json.clients) %>
+	"skills":[<% for(var i = 0; i < user_json.skills.length; i++){ %>"<%= user_json.skills[i] %>"<% if (i < user_json.skills	.length - 1){%>,<% } } %>],
+	"clients":[<% for(var i = 0; i < user_json.clients.length; i++){ %>"<%= user_json.clients[i] %>"<% if (i < user_json.clients.length - 1){%>,<% } } %>]
 }<% if(!lastInCollection) { %>,<% } %>

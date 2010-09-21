@@ -39,15 +39,15 @@ controller.list = function(req, res){
 		
 	logger.debug('looking up users with query ' + JSON.stringify(query));
 
-	User.find(query).all(function(data){
+	User.find(query).all(function(users){
 		if (req.params.format == 'json'){
-			res.headers['content-type'] = 'application/json';
+			res.headers['Content-Type'] = 'application/json; charset=utf-8';
 			res.render('users_show_json', {
 				locals:{users:users, jsonp:false},
 				layout:false
 			});
 		} else if (req.params.format == 'jsonp'){
-			res.headers['content-type'] = 'application/javascript';
+			res.headers['Content-Type'] = 'application/javascript; charset=utf-8';
 			var callback = req.query.callback || 'callback';
 			res.render('users_show_json', {
 				locals:{users:users, jsonp:callback},
@@ -114,14 +114,14 @@ controller.showformat = function(req, res){
 	logger.debug('looking up user ' + req.params.username + ' with format ' + req.params.format);
 	User.find({username:req.params.username}).first(function(data){
 		if (req.params.format == 'json'){
-			res.headers['content-type'] = 'application/json';
+			res.headers['Content-Type'] = 'application/json; charset=utf-8';
 			res.render('user_show_json', {
 				locals:{user:data, jsonp:false},
 				layout:false
 			});
 		} else if (req.params.format == 'jsonp'){
 			var callback = req.query.callback || 'callback';
-			res.headers['content-type'] = 'application/json';
+			res.headers['Content-Type'] = 'application/json; charset=utf-8';
 			res.render('user_show_json', {
 				locals:{user:data, jsonp:callback},
 				layout:false
