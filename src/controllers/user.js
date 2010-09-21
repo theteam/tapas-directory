@@ -14,6 +14,7 @@ logger.setLevel('DEBUG');
 *****************************************************/
 
 var User = require('../../modules/tapas-models').User;
+var Client = require('../../modules/tapas-models').Client;
 var controller = {};
 var tapas = module.parent.exports.tapas;
 var crypto = require('crypto');
@@ -54,8 +55,11 @@ controller.list = function(req, res){
 };
 
 controller.createform = function(req, res){
-	res.render('user_create.ejs', {
-		locals:{ "moduleName": tapas.directory.name }
+	Client.find({}).all(function(data){
+		logger.debug('found clients: ' + data);
+		res.render('user_create.ejs', {
+			locals:{ "moduleName": tapas.directory.name, clients:data }
+		});
 	});
 };
 
@@ -114,10 +118,27 @@ controller.showformat = function(req, res){
 
 controller.edit = function(req, res){
 	logger.debug('looking up user ' + req.params.username);
-	User.find({username:req.params.username}).first(function(data){
-		res.render('user_edit', {
-			locals:{user:data, "moduleName": tapas.directory.name}
+	User.find({username:req.params.username}).first(function(user){
+		
+		Client.find({}).all(function(clients){
+			for(var i=0; i < user.clients.length; i++){
+				for (var j=0; j < clients.length; j++){
+					logger.debug('comparing user client of ' + user.clients[i] + ' against list item ' + clients[j].full_name);
+					if (user.clients[i] === clients[j].full_name){
+						clients[j].selected = true;
+						break;
+					}
+				}				
+			}
+			logger.debug(JSON.stringify(clients));
+			res.render('user_edit', {
+				locals:{user:user, "moduleName": tapas.directory.name, clients:clients}
+			});
 		});
+		
+		
+		
+
 	});
 };
 

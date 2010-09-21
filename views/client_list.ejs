@@ -1,6 +1,6 @@
 <ul>
 	<% for(var i=0; i<clients.length; i++) {%>
-	   <li><%= clients[i].full_name %> (<%= clients[i].short_name %>)</li>
+	   <li><%= clients[i].full_name %><% if(null !== clients[i].short_name){ %> (<%= clients[i].short_name %>)</li><% }%>
 	<% } %>
 </ul>
 

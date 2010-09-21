@@ -48,9 +48,9 @@
 		<li>
 			<label for="clients">Clients</label>
 			<select id="clients" name="clients" multiple="multiple">
-				<option value="Logica">Logica</option>
-				<option value="Secret Sales">Secret Sales</option>
-				<option value="Universal Music">Universal Music</option>
+				<% for(var i=0; i<clients.length; i++) {%>
+					<option value="<%= clients[i].full_name %>" <% if(clients[i].selected){ %>selected<% } %>><%= clients[i].full_name %></option>
+				<% } %>
 			</select>
 		</li>	
 		<li>
