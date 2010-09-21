@@ -16,6 +16,10 @@ logger.setLevel('DEBUG');
 var User = require('../../modules/tapas-models').User;
 var controller = {};
 
+/****************************************************
+* controller handlers
+*****************************************************/
+
 controller.logout = function(req, res, params){
 	logger.debug('logging out');
     req.logout();

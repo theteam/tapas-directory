@@ -19,6 +19,10 @@ var controller = {};
 var tapas = module.parent.exports.tapas;
 var crypto = require('crypto');
 
+/****************************************************
+* controller handlers
+*****************************************************/
+
 controller.index = function(req, res){
 	req.params.format = 'html';
 	controller.list(req, res);	
@@ -34,23 +38,36 @@ controller.list = function(req, res){
 		query["last"] = new RegExp(req.query.last, 'i');
 		
 	logger.debug('looking up users with query ' + JSON.stringify(query));
-	// Formatter functions for output. 
-	var formatter = {
-		'jsonp': tapas.directory.asJSONP,
-		'json': tapas.directory.asJSON,
-		'html': tapas.directory.asHTML,
-		'inc': tapas.directory.asAHAH,
-		'ahah': tapas.directory.asAHAH
-	};
-	if (formatter[req.params.format]){
-		User.find(query).all(function(data){
-			logger.debug('Delivering users as '+ req.params.format);
-			formatter[req.params.format](data, req, res);	
-		});
-	} else {
-		logger.warn('unknown format (' + req.params.format + '), returning 415');
-		res.send("No known format", 415); // 415 is unknown media type, e.g. html, json etc
-	}
+
+	User.find(query).all(function(data){
+		if (req.params.format == 'json'){
+			res.headers['content-type'] = 'application/json';
+			res.render('users_show_json', {
+				locals:{users:users, jsonp:false},
+				layout:false
+			});
+		} else if (req.params.format == 'jsonp'){
+			res.headers['content-type'] = 'application/javascript';
+			var callback = req.query.callback || 'callback';
+			res.render('users_show_json', {
+				locals:{users:users, jsonp:callback},
+				layout:false
+			});
+		} else if (req.params.format.match('ahah|inc')) {
+			res.render('user_list.ejs', {
+				locals:{users:data},
+				layout: false
+			});
+		} else if (req.params.format == 'html'){
+			res.render('user_list.ejs', {
+				locals:{users:data}
+			});
+		} else {
+			logger.warn('unknown format (' + req.params.format + '), returning 415');
+			res.send("No known format", 415); // 415 is unknown media type, e.g. html, json etc
+		}	
+	});
+
 
 };
 
@@ -171,46 +188,6 @@ controller.update = function(req, res){
 		user.save(function(){
 			res.redirect('/users/' + user.username);
 		});
-	});
-};
-
-/*
-	Module functions
-*/
-
-// Return data formated as JSON
-tapas.directory.asJSON = function(users, req, res) {
-	res.headers['content-type'] = 'application/json';
-	res.render('users_show_json', {
-		locals:{users:users, jsonp:false},
-		layout:false
-	});
-};
-
-
-// Return data formated as JSONP
-tapas.directory.asJSONP = function(users, req, res) {
-	res.headers['content-type'] = 'application/javascript';
-	var callback = req.query.callback || 'callback';
-	res.render('users_show_json', {
-		locals:{users:users, jsonp:callback},
-		layout:false
-	});
-};
-
-
-// Return data formated as an HTML 
-tapas.directory.asHTML = function(data, req, res) {
-	res.render('user_list.ejs', {
-		locals:{users:data}
-	});
-};
-
-// Return data formated as an HTML fragment. (hCards)
-tapas.directory.asAHAH = function(data, req, res) {
-	res.render('user_list.ejs', {
-		locals:{users:data},
-		layout: false
 	});
 };
 

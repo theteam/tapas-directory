@@ -17,6 +17,10 @@ var Client = require('../../modules/tapas-models').Client;
 var controller = {};
 var tapas = module.parent.exports.tapas;
 
+/****************************************************
+* controller handlers
+*****************************************************/
+
 controller.list = function(req, res){
 	Client.find({}).all(function(data){
 		res.render('client_list.ejs', {
