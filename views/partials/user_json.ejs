@@ -1,0 +1,16 @@
+{
+	"full_name":"<%= user_json.full_name %>",
+	"username":"<%= user_json.username %>",
+	"first_name":"<%= user_json.first%>",
+	"last_name":"<%= user_json.last%>",
+	"phone":"<%= user_json.phone %>",
+	"email":"<%= user_json.email %>",
+	"company":"<%= user_json.company %>",
+	"department":"<%= user_json.department %>",
+	"address":"<%= user_json.address %>",
+	"image_uri":"<%= user_json.imageUri %>",
+	"bio":"<%= user_json.bio %>",
+	"updated_at":"<%= user_json.updated_at%>",
+	"skills":<%= JSON.stringify(user_json.skills) %>,
+	"clients":<%= JSON.stringify(user_json.clients) %>
+}<% if(!lastInCollection) { %>,<% } %>

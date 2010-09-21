@@ -97,9 +97,18 @@ controller.showformat = function(req, res){
 	logger.debug('looking up user ' + req.params.username + ' with format ' + req.params.format);
 	User.find({username:req.params.username}).first(function(data){
 		if (req.params.format == 'json'){
-			tapas.directory.asJSON(data, res);
+			res.headers['content-type'] = 'application/json';
+			res.render('user_show_json', {
+				locals:{user:data, jsonp:false},
+				layout:false
+			});
 		} else if (req.params.format == 'jsonp'){
-			tapas.directory.asJSONP(data, res);
+			var callback = req.query.callback || 'callback';
+			res.headers['content-type'] = 'application/json';
+			res.render('user_show_json', {
+				locals:{user:data, jsonp:callback},
+				layout:false
+			});
 		} else if (req.params.format.match('ahah|inc')) {
 			res.render('user_show.ejs', {
 				locals:{user:data},
@@ -170,19 +179,23 @@ controller.update = function(req, res){
 */
 
 // Return data formated as JSON
-tapas.directory.asJSON = function(data, req, res) {
+tapas.directory.asJSON = function(users, req, res) {
 	res.headers['content-type'] = 'application/json';
-	var result = JSON.stringify(data);
-	res.send(result);
+	res.render('users_show_json', {
+		locals:{users:users, jsonp:false},
+		layout:false
+	});
 };
 
 
 // Return data formated as JSONP
-tapas.directory.asJSONP = function(data, req, res) {
+tapas.directory.asJSONP = function(users, req, res) {
 	res.headers['content-type'] = 'application/javascript';
 	var callback = req.query.callback || 'callback';
-	var result = callback + '('+JSON.stringify(data)+')';
-	res.send(result);
+	res.render('users_show_json', {
+		locals:{users:users, jsonp:callback},
+		layout:false
+	});
 };
 
 

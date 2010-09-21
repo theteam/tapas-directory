@@ -1,0 +1,16 @@
+<% if (jsonp){ %><%= jsonp %>(<% } %>{
+	"full_name":"<%= user.full_name %>",
+	"username":"<%= user.username %>",
+	"first_name":"<%= user.first%>",
+	"last_name":"<%= user.last%>",
+	"phone":"<%= user.phone %>",
+	"email":"<%= user.email %>",
+	"company":"<%= user.company %>",
+	"department":"<%= user.department %>",
+	"address":"<%= user.address %>",
+	"image_uri":"<%= user.imageUri %>",
+	"bio":"<%= user.bio %>",
+	"updated_at":"<%= user.updated_at%>",
+	"skills":<%= JSON.stringify(user.skills) %>,
+	"clients":<%= JSON.stringify(user.clients) %>
+}<% if (jsonp){ %>)<% } %>
