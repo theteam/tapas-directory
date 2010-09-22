@@ -55,12 +55,12 @@ controller.list = function(req, res){
 			});
 		} else if (req.params.format.match('ahah|inc')) {
 			res.render('user_list.ejs', {
-				locals:{users:data},
+				locals:{users:users},
 				layout: false
 			});
 		} else if (req.params.format == 'html'){
 			res.render('user_list.ejs', {
-				locals:{users:data}
+				locals:{users:users}
 			});
 		} else {
 			logger.warn('unknown format (' + req.params.format + '), returning 415');
