@@ -15,6 +15,8 @@ logger.setLevel('DEBUG');
 
 var User = require('../../modules/tapas-models').User;
 var controller = {};
+var props = require('properties');
+
 
 /****************************************************
 * controller handlers
@@ -29,7 +31,7 @@ controller.logout = function(req, res, params){
 
 controller.validatePassword = function(username, password, successHandler, failureHandler){
 
-	if (username === 'admin' && password === 'password')
+	if (username === props.admin.username && password === props.admin.password)
 		successHandler();
 
 	User.find({username:username}).first(function(data){
