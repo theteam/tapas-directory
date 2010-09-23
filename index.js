@@ -1,4 +1,7 @@
 var tapas = require('./src/app').tapas;
 
-tapas.server.listen(tapas.port);
-console.log('Tapas being served on port ' + tapas.port);
+console.log(process.cwd());
+var props = require('properties');
+
+tapas.server.listen(props.port);
+console.log('Tapas being served on port ' + props.port);

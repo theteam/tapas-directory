@@ -1,10 +1,11 @@
-node 0.2.2
+node 0.2.0
 module senchalabs connect
 module ciaranj connect-auth
 module visionmedia express
 module visionmedia ejs
 module theteam tapas-models
 module csausdev log4js-node
+module theteam node-properties
 
 ##########################
 # As ndistro is just a bash script

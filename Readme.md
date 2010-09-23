@@ -28,3 +28,7 @@ Tapas is heavily API driven and is intended to provide your applications with a 
 ## Running Directory
 
 Authentication credentials are bootstrapped with username/password of admin/password.  This will allow you to create users to get you started.  This is currently hardcoded in src/controllers/auth.js
+
+I run the app using the following command.
+
+  ./bin/node index.js > /dev/null 2<&1 &
