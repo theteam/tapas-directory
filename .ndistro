@@ -1,4 +1,4 @@
-node 0.1.102
+node 0.2.2
 module senchalabs connect
 module ciaranj connect-auth
 module visionmedia express

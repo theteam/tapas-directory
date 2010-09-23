@@ -1,21 +1,35 @@
 <project name="tapas-directory" default="default">
 	
-	<target name="default" depends="clean, setup"/>
+	<target name="default" depends="clean, dist"/>
 	
 	<target name="clean">
 		<echo message="cleaning directory build"/>
-		<delete dir="./build"/>
+		<delete dir="build"/>
+		<delete dir="dist"/>
 	</target>
 	
-	<target name="setup">
-		<echo message="creating build directory"/>
-		<mkdir dir="./build"/>
-		<copy todir="build">
+	<target name="dist" depends="clean">
+		<echo message="creating distribution"/>
+		<mkdir dir="dist"/>
+		<mkdir dir="dist/build"/>
+		<copy todir="dist/build">
 			<fileset dir=".">
-				<exclude name="build"/>
+				<exclude name="build/**"/>
+				<exclude name="build.xml"/>
+				<exclude name=".ndistro"/>
+				<exclude name=".gitignore"/>
+				<exclude name="test/**"/>
+				<exclude name="dist/**"/>
 			</fileset>
 		</copy>
-		<exec executable="ndistro" dir="build" failonerror="true"/>
+		<exec executable="chmod" dir="dist/build/bin">
+			<arg value="+x"/>
+			<arg value="node"/>
+		</exec>
+		<tar destfile="dist/${ant.project.name}.tar" basedir="dist/build"/>
+		<gzip destfile="dist/${ant.project.name}.tgz" src="dist/${ant.project.name}.tar"/>
+		<delete file="dist/${ant.project.name}.tar"/>
+		<delete dir="dist/build"/>
 	</target>
 		
 </project>

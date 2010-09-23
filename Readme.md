@@ -25,4 +25,6 @@ This build script should also start the application, run tests against it and th
 
 Tapas is heavily API driven and is intended to provide your applications with a performant API layer and a simple admin area to manage your content.  
 
+## Running Directory
 
+Authentication credentials are bootstrapped with username/password of admin/password.  This will allow you to create users to get you started.  This is currently hardcoded in src/controllers/auth.js
