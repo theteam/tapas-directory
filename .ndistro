@@ -6,6 +6,7 @@ module visionmedia ejs
 module theteam tapas-models
 module csausdev log4js-node
 module theteam node-properties
+module theteam node-daemon
 
 ##########################
 # As ndistro is just a bash script
